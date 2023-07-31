@@ -12,10 +12,11 @@ export default function CarImage({
       data={carouselData}
       renderItem={renderItem}
       sliderWidth={screenWidth}
-      itemWidth={300}
+      itemWidth={screenWidth}
       autoplay={true}
       autoplayInterval={3000}
       windowSize={1}
+      loop={true}
     />
   );
 }

@@ -4,6 +4,7 @@ import SignIn from "./Src/components/signIn";
 import HomeScreen from "./Src/screens/HomeScreen";
 import { useFonts } from "expo-font";
 import { ChangaOne_400Regular } from "@expo-google-fonts/changa-one";
+import QuestionScreen from "./Src/screens/QuestionScreen";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -16,7 +17,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       {/* <SignIn /> */}
-      <HomeScreen />
+      {/* <HomeScreen /> */}
+      <QuestionScreen />
     </View>
   );
 }
