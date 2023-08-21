@@ -7,6 +7,7 @@ import Carousel from "react-native-snap-carousel";
 import preview from "../../assets/images/preview.png";
 import CarImage from "../components/CarImage";
 import { carouselData } from "../../assets/constants/index";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function HomeScreen() {
   const renderItem = ({ item }) => {
@@ -18,7 +19,10 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={styles.homeContainer}>
+    <LinearGradient
+      colors={["#efe6dc", "#d3b58d", "#ffffff"]}
+      style={[styles.background, styles.homeContainer]}
+    >
       <View style={styles.header}>
         <FontText style={styles.headerText}>BibleQ</FontText>
         <Image source={trophy} style={styles.headerImg} />
@@ -37,18 +41,20 @@ export default function HomeScreen() {
       <TouchableOpacity style={styles.btn}>
         <Text style={styles.btnText}>Get Started</Text>
       </TouchableOpacity>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  homeContainer: {
-    marginTop: 50,
+  background: {
+    flex: 1,
+    paddingTop: 50,
+    justifyContent: "center",
   },
+
   header: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
   },
   headerText: {
     fontSize: 84,

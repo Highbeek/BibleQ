@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import SignIn from "./Src/components/signIn";
+import { useFonts, ChangaOne_400Regular } from "@expo-google-fonts/changa-one";
 import HomeScreen from "./Src/screens/HomeScreen";
-import { useFonts } from "expo-font";
-import { ChangaOne_400Regular } from "@expo-google-fonts/changa-one";
-import QuestionScreen from "./Src/screens/QuestionScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SignInScreen from "./Src/screens/SignInScreen";
 
+const Stack = createNativeStackNavigator();
 export default function App() {
   let [fontsLoaded] = useFonts({
     ChangaOneRegular: ChangaOne_400Regular,
@@ -14,19 +15,28 @@ export default function App() {
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
+
   return (
-    <View style={styles.container}>
-      {/* <SignIn /> */}
-      {/* <HomeScreen /> */}
-      <QuestionScreen />
-    </View>
+    <NavigationContainer style={styles.container}>
+      <Stack.Navigator initialRouteName="SignIn">
+        <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:
-      "linear-gradient(180deg, hsla(32, 36%, 90%, 1) 0%, hsla(34, 44%, 69%, 1) 30%, hsla(0, 0%, 100%, 1) 100%)",
+    backgroundColor: "transparent",
   },
 });
