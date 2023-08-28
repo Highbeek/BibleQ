@@ -8,8 +8,10 @@ import preview from "../../assets/images/preview.png";
 import CarImage from "../components/CarImage";
 import { carouselData } from "../../assets/constants/index";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
   const renderItem = ({ item }) => {
     return (
       <View>
@@ -38,7 +40,12 @@ export default function HomeScreen() {
           Play to Test Your Knowledge!
         </FontText>
       </View>
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={() => {
+          navigation.navigate("Question");
+        }}
+      >
         <Text style={styles.btnText}>Get Started</Text>
       </TouchableOpacity>
     </LinearGradient>

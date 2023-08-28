@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { bibleQuestions } from "../../assets/constants";
 
 const QuestionCategoryScreen = ({ category }) => {
@@ -37,21 +37,21 @@ const QuestionCategoryScreen = ({ category }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text>{questions[currentQuestion].question}</Text>
       {questions[currentQuestion].answers.map((answer, index) => (
         <Text key={index} onPress={() => handleAnswerSelection(answer)}>
           {answer}
         </Text>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:50
+    marginTop: 50,
   },
 });
 

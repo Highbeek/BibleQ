@@ -5,6 +5,9 @@ import {
   View,
   KeyboardAvoidingView,
   StatusBar,
+  ActivityIndicator,
+  Button,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, { useSharedValue } from "react-native-reanimated";
@@ -12,23 +15,63 @@ import { auth } from "../config/firebase";
 import ImageComponent from "../components/SignUpImage";
 import Form from "../components/Form";
 import styles from "../../styles/styles";
+import { FIREBASE_AUTH } from "../config/firebase";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [loading, setLoading] = useState(false);
   const imagePosition = useSharedValue(1);
   const formButtonScale = useSharedValue(1);
 
-  const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log(user.email, username);
-      })
-      .catch((error) => alert(error.message));
+  const auth = FIREBASE_AUTH;
+
+  const handleSignUp = async () => {
+    setLoading(true);
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(response);
+      Alert.alert("Success", "User created and registered successfully", [
+        {
+          text: "OK",
+        },
+      ]);
+    } catch (err) {
+      console.log(err);
+      Alert.alert("Error", "Sign Up and Registration Failed!" + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+ 
+
+  const handleSignIn = async () => {
+    setLoading(true);
+    try {
+      const response = await signInWithEmailAndPassword(
+        auth,
+        user.email,
+        user.password
+      );
+      console.log(response);
+      // Alert.alert("Sign In Success");
+    } catch (err) {
+      console.log(err);
+      Alert.alert("Sign In Failed!" + err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const loginHandler = () => {
@@ -37,14 +80,10 @@ export default function SignInScreen() {
       setIsRegistering(false);
     }
   };
-
   const registerHandler = () => {
     imagePosition.value = 0;
     if (!isRegistering) {
       setIsRegistering(true);
-    }
-    if (isRegistering) {
-      handleSignUp();
     }
   };
 
@@ -72,6 +111,8 @@ export default function SignInScreen() {
             loginHandler={loginHandler}
             registerHandler={registerHandler}
             imagePosition={imagePosition}
+            handleSignUp={handleSignUp}
+            handlesignIn={handleSignIn}
           />
         </Animated.View>
       </KeyboardAvoidingView>

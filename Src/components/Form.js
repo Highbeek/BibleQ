@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   KeyboardAvoidingView,
   TextInput,
@@ -6,6 +6,8 @@ import {
   Text,
   View,
   Alert,
+  ActivityIndicator,
+  Keyboard,
 } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -14,7 +16,6 @@ import Animated, {
 } from "react-native-reanimated";
 import FontText from "../../assets/constants/fonts";
 import styles from "../../styles/styles";
-import { registerWithEmailAndPassword, signIn } from "../config/firebase";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Form({
@@ -29,7 +30,12 @@ export default function Form({
   setPassword,
   loginHandler,
   registerHandler,
+  handleSignUp,
+  handleSignIn,
 }) {
+  const [loading, setLoading] = useState(false);
+  const [isKeyboardActive, setIsKeyboardActive] = useState(false);
+
   const formAnimatedStyle = useAnimatedStyle(() => {
     return {
       opacity: withTiming(imagePosition.value === 0 ? 1 : 0, {
@@ -40,10 +46,46 @@ export default function Form({
     };
   });
 
-  const navigation = useNavigation();
+  
   const handleCloseButton = () => {
     imagePosition.value = 1;
   };
+
+  const textInputTextColorAnimatedStyle = useAnimatedStyle(() => {
+    const textColorOpacity =
+      imagePosition.value === 0
+        ? interpolate(imagePosition.value, [0, 1], [1, 0])
+        : 1;
+
+    const textColor = `rgba(255, 255, 255, ${textColorOpacity})`;
+
+    return {
+      color: textColor,
+    };
+  });
+
+  useEffect(() => {
+    // Listen to keyboard events and update isKeyboardActive state
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setIsKeyboardActive(true);
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setIsKeyboardActive(false);
+      }
+    );
+
+    // Clean up the listeners when the component unmounts
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const buttonsAnimatedStyle = useAnimatedStyle(() => {
     const interpolation = interpolate(imagePosition.value, [0, 1], [250, 0]);
@@ -57,6 +99,7 @@ export default function Form({
 
   const formButtonAnimatedStyle = useAnimatedStyle(() => {
     return {
+
       transform: [{ scale: formButtonScale.value }],
     };
   });
@@ -73,7 +116,7 @@ export default function Form({
           <FontText style={styles.buttonText}>REGISTER</FontText>
         </Pressable>
       </Animated.View>
-      <Animated.View style={[styles.formContainer, formAnimatedStyle]}>
+      <Animated.View style={[styles.formInputContainer, formAnimatedStyle]}>
         <KeyboardAvoidingView behavior="position">
           <TextInput
             placeholder="Email"
@@ -99,44 +142,52 @@ export default function Form({
             value={password}
             onChangeText={setPassword}
           />
-          <Animated.View style={[styles.formButton, formButtonAnimatedStyle]}>
+          <Animated.View
+            style={[
+              styles.formButton,
+              formButtonAnimatedStyle,
+              isKeyboardActive && textInputTextColorAnimatedStyle,
+            ]}
+          >
             <Pressable
               onPress={async () => {
+                if (loading) return;
+                setLoading(true);
+
                 if (isRegistering) {
                   try {
-                    const userCredential = await registerWithEmailAndPassword(
-                      email,
-                      password
-                    );
-                    const user = userCredential.user;
-                    console.log(
-                      "User registered:",
-                      user.uid,
-                      user.email,
-                      user.username
-                    );
-                    Alert.alert(
-                      "Success",
-                      "Account created",
-                      [{ text: "OK", onPress: () => handleCloseButton() }],
-                      { cancelable: false }
-                    );
-
-                    handleCloseButton();
-                  } catch (error) {}
+                    await handleSignUp(); // Using Firebase signUp function
+                    // Handle success and error cases
+                  } catch (error) {
+                    // Handle error
+                  } finally {
+                    setLoading(false);
+                  }
                 } else {
                   try {
-                   const userCredential = await signIn(email, password);
-                    const user = userCredential.user;
-                    console.log("User logged in:", user.uid, user.email);
-                    navigation.navigate("Home");
-                  } catch (error) {}
+                    await handleSignIn(); // Using Firebase signIn function
+                    // Handle success and error cases
+                  } catch (error) {
+                    // Handle error
+                  } finally {
+                    setLoading(false);
+                  }
                 }
               }}
+              disabled={loading}
             >
-              <FontText style={styles.buttonText}>
-                {isRegistering ? "REGISTER" : "LOG IN"}
-              </FontText>
+              {loading ? (
+                <ActivityIndicator size="large" color="#d3b58d" />
+              ) : (
+                <Pressable
+                  style={styles.button}
+                  onPress={isRegistering ? handleSignUp : handleSignIn}
+                >
+                  <FontText style={styles.buttonText}>
+                    {isRegistering ? "REGISTER" : "LOG IN"}
+                  </FontText>
+                </Pressable>
+              )}
             </Pressable>
           </Animated.View>
         </KeyboardAvoidingView>

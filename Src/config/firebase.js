@@ -1,10 +1,12 @@
-import * as firebase from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import {EXPO_FIREBASE_API_KEY} from "@env"
 
 
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: EXPO_FIREBASE_API_KEY,
   authDomain: "bibleq-83630.firebaseapp.com",
   projectId: "bibleq-83630",
   storageBucket: "bibleq-83630.appspot.com",
@@ -14,24 +16,8 @@ const firebaseConfig = {
 };
 
 
-export
-// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-let app;
-try {
-  app = firebase.app();
-} catch (error) {
-  app = firebase.initializeApp(firebaseConfig);
-}
+export const FIREBASE_AUTH = getAuth(app);
 
-const auth = getAuth(app);
-
-export const registerWithEmailAndPassword = (email, password) => {
-  return createUserWithEmailAndPassword(auth, email, password); 
-};
-
-export const signIn = (email, password) => {
-  return signInWithEmailAndPassword(auth, email, password);
-};
-
-export { auth };
+export const FIREBASE_DB = getFirestore(app);
