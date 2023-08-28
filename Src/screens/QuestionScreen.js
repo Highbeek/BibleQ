@@ -1,7 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
 import FontText from "../../assets/constants/fonts";
 import QuestionCategoryScreen from "../components/QuestionCategoryScreen";
+import { FIREBASE_AUTH } from "../config/firebase";
+import { signOut } from "firebase/auth";
 
 export default function QuestionScreen() {
   const [selectedCategory, setSelectedCategory] = React.useState(null);
@@ -10,13 +12,28 @@ export default function QuestionScreen() {
     setSelectedCategory(category);
   };
 
+  const handleSignOut = () => {};
+
   if (selectedCategory) {
     return <QuestionCategoryScreen category={selectedCategory} />;
   }
 
   return (
     <View style={styles.CategoryContainer}>
-      <FontText style={styles.logoText}>BibleQ</FontText>
+      <View
+        style={{
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
+        <FontText style={styles.logoText}>BibleQ</FontText>
+        <Button
+          onPress={() => FIREBASE_AUTH.signOut()}
+          title="Log Out"
+          color="#000"
+        />
+      </View>
       <Text>Choose Category</Text>
 
       <View style={styles.categories}>

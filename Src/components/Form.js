@@ -16,7 +16,6 @@ import Animated, {
 } from "react-native-reanimated";
 import FontText from "../../assets/constants/fonts";
 import styles from "../../styles/styles";
-import { useNavigation } from "@react-navigation/native";
 
 export default function Form({
   isRegistering,
@@ -46,7 +45,6 @@ export default function Form({
     };
   });
 
-  
   const handleCloseButton = () => {
     imagePosition.value = 1;
   };
@@ -99,7 +97,6 @@ export default function Form({
 
   const formButtonAnimatedStyle = useAnimatedStyle(() => {
     return {
-
       transform: [{ scale: formButtonScale.value }],
     };
   });
@@ -156,8 +153,7 @@ export default function Form({
 
                 if (isRegistering) {
                   try {
-                    await handleSignUp(); // Using Firebase signUp function
-                    // Handle success and error cases
+                    await handleSignUp();
                   } catch (error) {
                     // Handle error
                   } finally {
@@ -165,8 +161,7 @@ export default function Form({
                   }
                 } else {
                   try {
-                    await handleSignIn(); // Using Firebase signIn function
-                    // Handle success and error cases
+                    await handleSignIn();
                   } catch (error) {
                     // Handle error
                   } finally {
@@ -177,16 +172,11 @@ export default function Form({
               disabled={loading}
             >
               {loading ? (
-                <ActivityIndicator size="large" color="#d3b58d" />
+                <ActivityIndicator size="large" color="#000" />
               ) : (
-                <Pressable
-                  style={styles.button}
-                  onPress={isRegistering ? handleSignUp : handleSignIn}
-                >
-                  <FontText style={styles.buttonText}>
-                    {isRegistering ? "REGISTER" : "LOG IN"}
-                  </FontText>
-                </Pressable>
+                <FontText style={styles.buttonText}>
+                  {isRegistering ? "REGISTER" : "LOG IN"}
+                </FontText>
               )}
             </Pressable>
           </Animated.View>

@@ -61,8 +61,8 @@ export default function SignInScreen() {
     try {
       const response = await signInWithEmailAndPassword(
         auth,
-        user.email,
-        user.password
+        email, 
+        password 
       );
       console.log(response);
       // Alert.alert("Sign In Success");
@@ -112,7 +112,7 @@ export default function SignInScreen() {
             registerHandler={registerHandler}
             imagePosition={imagePosition}
             handleSignUp={handleSignUp}
-            handlesignIn={handleSignIn}
+            handleSignIn={handleSignIn}
           />
         </Animated.View>
       </KeyboardAvoidingView>
