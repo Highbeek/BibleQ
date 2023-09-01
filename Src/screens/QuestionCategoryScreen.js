@@ -15,8 +15,7 @@ export default function QuestionScreen() {
 
   if (selectedCategory) {
     return  <QuizScreen/>
-    // <QuestionCategoryScreen category={selectedCategory}
-    //  />;
+    
   }
 
   return (
