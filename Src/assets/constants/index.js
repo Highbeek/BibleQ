@@ -1,13 +1,16 @@
-import preview from "../images/preview.png";
-import slide2 from "../images/slide2.png";
-import slide3 from "../images/slide3.png";
-import slide4 from "../images/slide3.jpg";
-import slide5 from "../images/slide5.jpg";
-import slide6 from "../images/slide6.jpg";
-import slide7 from "../images/slide7.jpg";
-import slide8 from "../images/slide8.jpg";
-import slide9 from "../images/slide9.jpg";
-import slide10 from "../images/slide10.jpg";
+import {
+  preview,
+  // slide1,
+  slide2,
+  slide3,
+  slide4,
+  slide5,
+  slide6,
+  slide7,
+  slide8,
+  slide9,
+  slide10,
+} from "../images";
 
 export const carouselData = [
   { id: 1, img: preview, title: "Slide 1" },
@@ -22,7 +25,6 @@ export const carouselData = [
   { id: 10, img: slide10, title: "Slide 10" },
 ];
 
-
 // bibleQuestions.js
 export const bibleQuestions = {
   oldTestament: [
@@ -34,7 +36,8 @@ export const bibleQuestions = {
     },
     {
       id: "Q2",
-      question: "Who built the ark to save his family and animals from the flood?",
+      question:
+        "Who built the ark to save his family and animals from the flood?",
       answers: ["Abraham", "Moses", "Noah", "David"],
       correctAnswer: "Noah",
     },
@@ -71,5 +74,3 @@ export const bibleQuestions = {
     // Add more general Bible questions here...
   ],
 };
-
-

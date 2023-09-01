@@ -14,7 +14,7 @@ import Animated, {
   withTiming,
   interpolate,
 } from "react-native-reanimated";
-import FontText from "../../assets/constants/fonts";
+import FontText from "../assets/constants/fonts";
 import styles from "../../styles/styles";
 
 export default function Form({

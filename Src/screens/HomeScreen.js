@@ -1,12 +1,9 @@
 // home.js
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import FontText from "../../assets/constants/fonts";
-import trophy from "../../assets/images/trophy.png";
-import Carousel from "react-native-snap-carousel";
-import preview from "../../assets/images/preview.png";
+import FontText from "../assets/constants/fonts";
+import { trophy } from "../assets/images";
 import CarImage from "../components/CarImage";
-import { carouselData } from "../../assets/constants/index";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 

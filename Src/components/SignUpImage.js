@@ -8,6 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 import styles from "../../styles/styles";
+import { abram } from "../assets/images";
 
 export default function ImageComponent({ imagePosition }) {
   const { height, width } = Dimensions.get("window");
@@ -42,7 +43,7 @@ export default function ImageComponent({ imagePosition }) {
           <Ellipse cx={width / 2} rx={height} ry={height + 100} />
         </ClipPath>
         <Image
-          href={require("../../assets/abram2.jpeg")}
+          href={abram}
           width={width + 100}
           height={height + 100}
           preserveAspectRatio="xMidYMid slice"

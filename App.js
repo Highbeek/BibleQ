@@ -3,9 +3,12 @@ import { StyleSheet, View, Text } from "react-native";
 import { useFonts, ChangaOne_400Regular } from "@expo-google-fonts/changa-one";
 import HomeScreen from "./Src/screens/HomeScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  createNativeStackNavigator,
+} from "@react-navigation/native-stack"; 
+import { CardStyleInterpolators } from "@react-navigation/stack";
 import SignInScreen from "./Src/screens/SignInScreen";
-import QuestionScreen from "./Src/screens/QuestionScreen";
+import QuestionScreen from "./Src/screens/QuestionCategoryScreen";
 import { FIREBASE_AUTH } from "./Src/config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -49,7 +52,12 @@ export default function App() {
 
   return (
     <NavigationContainer style={styles.container}>
-      <Stack.Navigator initialRouteName="SignIn">
+      <Stack.Navigator
+        initialRouteName="SignIn"
+        screenOptions={{
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+        }}
+      >
         {user ? (
           <Stack.Screen
             name="Inside"

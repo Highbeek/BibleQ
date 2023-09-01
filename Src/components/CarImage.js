@@ -2,11 +2,10 @@
 import React from "react";
 import { View, Text, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel";
-import { carouselData } from "../../assets/constants";
+import { carouselData } from "../assets/constants";
 
-export default function CarImage({ 
-  renderItem }) {
-    const screenWidth = Dimensions.get("window").width;
+export default function CarImage({ renderItem }) {
+  const screenWidth = Dimensions.get("window").width;
   return (
     <Carousel
       data={carouselData}
@@ -20,4 +19,3 @@ export default function CarImage({
     />
   );
 }
-

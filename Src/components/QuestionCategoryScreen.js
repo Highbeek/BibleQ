@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import { bibleQuestions } from "../../assets/constants";
+import { bibleQuestions } from "../assets/constants";
 
 const QuestionCategoryScreen = ({ category }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);

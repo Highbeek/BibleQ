@@ -1,21 +1,22 @@
-import React from "react";
+import React,{useState} from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
-import FontText from "../../assets/constants/fonts";
+import FontText from "../assets/constants/fonts";
 import QuestionCategoryScreen from "../components/QuestionCategoryScreen";
 import { FIREBASE_AUTH } from "../config/firebase";
 import { signOut } from "firebase/auth";
+import QuizScreen from "../components/QuizScreen";
 
 export default function QuestionScreen() {
-  const [selectedCategory, setSelectedCategory] = React.useState(null);
+  const [selectedCategory, setSelectedCategory] =useState(null);
 
   const handleCategoryPress = (category) => {
     setSelectedCategory(category);
   };
 
-  const handleSignOut = () => {};
-
   if (selectedCategory) {
-    return <QuestionCategoryScreen category={selectedCategory} />;
+    return  <QuizScreen/>
+    // <QuestionCategoryScreen category={selectedCategory}
+    //  />;
   }
 
   return (
